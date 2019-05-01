@@ -108,7 +108,7 @@ RUN git clone https://github.com/zeromq/cppzmq.git && \
     rm -rf cppzmq
 
 
-RUN wget https://github.com/sirehna/ssc/releases/download/v8.0.1/ssc_binary_debian9_amd64.deb -O ssc.deb && \
-    dpkg -r ssc && \
+RUN wget https://github.com/sirehna/ssc/releases/download/v8.0.2/ssc_binary_debian9_amd64.deb -O ssc.deb && \
+    dpkg -r ssc || true && \
     dpkg -i ssc.deb && \
     rm ssc.deb
