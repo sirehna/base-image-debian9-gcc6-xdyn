@@ -107,6 +107,10 @@ RUN git clone https://github.com/zeromq/cppzmq.git && \
     cd .. && \
     rm -rf cppzmq
 
+RUN cd /opt && \
+    git clone https://github.com/garrison/eigen3-hdf5 && \
+    cd eigen3-hdf5 && \
+    git checkout 2c782414251e75a2de9b0441c349f5f18fe929a2
 
 RUN wget https://github.com/sirehna/ssc/releases/download/v8.0.2/ssc_binary_debian9_amd64.deb -O ssc.deb && \
     dpkg -r ssc || true && \
