@@ -1,6 +1,7 @@
 FROM sirehna/base-image-debian9-gcc6:latest
 
-RUN apt-get update -yq && \
+RUN echo "deb http://deb.debian.org/debian stretch-backports main" >>  /etc/apt/sources.list && \
+    apt-get update -yq && \
     apt-get install --no-install-recommends -y \
         ninja-build \
         git \
@@ -22,11 +23,21 @@ RUN apt-get update -yq && \
         automake \
         libtool \
         curl \
-        unzip \
-     && \
-     apt-get clean && \
-     rm -rf /tmp/* /var/tmp/* && \
-     rm -rf /var/lib/apt/lists
+        unzip \        
+        libc-ares-dev \
+        libssl-dev  && \    
+    apt-get -t stretch-backports install --yes --no-install-recommends \
+        libgrpc++-dev \
+        libgrpc++1 \
+        libgrpc-dev \
+        libgrpc6 \
+        libprotobuf-dev \
+        libprotoc-dev \
+        protobuf-compiler-grpc \
+        && \
+    apt-get clean && \
+    rm -rf /tmp/* /var/tmp/* && \
+    rm -rf /var/lib/apt/lists
 
 WORKDIR /opt
 
