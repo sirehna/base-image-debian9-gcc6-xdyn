@@ -69,7 +69,7 @@ RUN cd /opt && \
     cd eigen3-hdf5 && \
     git checkout 2c782414251e75a2de9b0441c349f5f18fe929a2
 
-RUN wget https://github.com/sirehna/ssc/releases/download/v8.0.2/ssc_binary_debian9_amd64.deb -O ssc.deb && \
+RUN wget https://github.com/sirehna/ssc/releases/download/v8.0.3/ssc_binary_debian9_amd64.deb -O ssc.deb && \
     dpkg -r ssc || true && \
     dpkg -i ssc.deb && \
     rm ssc.deb
