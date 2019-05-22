@@ -64,58 +64,6 @@ RUN wget https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.8/hdf5-1.8.12/src
     cd .. && \
     rm -rf hdf5_source.tar.gz HDF5_SRC HDF5_build
 
-RUN git clone https://github.com/google/protobuf.git protobuf_src && \
-    cd protobuf_src \
-    git checkout 3.0.x && \
-    ./autogen.sh && \
-    ./configure "CFLAGS=-fPIC" "CXXFLAGS=-fPIC" && \
-    make && \
-    make install && \
-    ldconfig && \
-    cd .. && \
-    rm -rf protobuf_src
-
-RUN git clone https://github.com/zeromq/libzmq.git libzmq_src && \
-    cd libzmq_src && \
-    git checkout v4.2.2 && \
-    mkdir build && \
-    cd build && \
-    cmake \
-        -DWITH_PERF_TOOL=OFF \
-        -DZMQ_BUILD_TESTS=OFF \
-        -DENABLE_CPACK=OFF \
-        -DCMAKE_C_FLAGS="-fPIC" \
-        -DCMAKE_CXX_FLAGS="-fPIC" \
-        -DCMAKE_BUILD_TYPE=Release \
-        .. \
-    && \
-    make && \
-    echo "if(NOT TARGET libzmq) # in case find_package is called multiple times" >> ZeroMQConfig.cmake && \
-    echo "  add_library(libzmq SHARED IMPORTED)" >> ZeroMQConfig.cmake && \
-    echo "  set_target_properties(libzmq PROPERTIES IMPORTED_LOCATION \${\${PN}_LIBRARY})" >> ZeroMQConfig.cmake && \
-    echo "endif(NOT TARGET libzmq)" >> ZeroMQConfig.cmake && \
-    echo "" >> ZeroMQConfig.cmake && \
-    echo "if(NOT TARGET libzmq-static) # in case find_package is called multiple times" >> ZeroMQConfig.cmake && \
-    echo "  add_library(libzmq-static STATIC IMPORTED)" >> ZeroMQConfig.cmake && \
-    echo "  set_target_properties(libzmq-static PROPERTIES IMPORTED_LOCATION \${\${PN}_STATIC_LIBRARY})" >> ZeroMQConfig.cmake && \
-    echo "endif(NOT TARGET libzmq-static)" >> ZeroMQConfig.cmake && \
-    make install && \
-    ldconfig && \
-    rm -rf libzmq_src
-
-RUN git clone https://github.com/zeromq/cppzmq.git cppzmq_src && \
-    cd cppzmq_src && \
-    git checkout v4.2.2 && \
-    mkdir build && \
-    cd build && \
-    cmake \
-        -DCMAKE_C_FLAGS="-fPIC" \
-        -DCMAKE_CXX_FLAGS="-fPIC" \
-        .. && \
-    make install && \
-    cd .. && \
-    rm -rf cppzmq_src
-
 RUN cd /opt && \
     git clone https://github.com/garrison/eigen3-hdf5 && \
     cd eigen3-hdf5 && \
